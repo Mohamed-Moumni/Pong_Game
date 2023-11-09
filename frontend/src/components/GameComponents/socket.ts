@@ -3,9 +3,8 @@ import { Socket, io } from "socket.io-client";
 
 let socket: Socket | undefined = undefined;
 
-if (Cookies.get("jwt"))
-{
-    socket = io("http://e1r8p2.1337.ma:3000/game", {
+if (Cookies.get("jwt")) {
+  socket = io("http://localhost:3000/game", {
     transports: ["websocket"],
     auth: {
       token: "Bearer " + Cookies.get("jwt"),

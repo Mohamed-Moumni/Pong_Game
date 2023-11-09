@@ -28,7 +28,7 @@ const AuthUserProvider = ({ children }: UserAuthProps) => {
           .then((res) => {
             if (!res.user.avatar.includes("http"))
               res.user.avatar =
-                "http://e1r8p2.1337.ma:3000/public/users/imgs/" +
+                "http://localhost:3000/public/users/imgs/" +
                 res.user.avatar;
             setCurrentUser(res);
             setLoading(false);
@@ -36,9 +36,9 @@ const AuthUserProvider = ({ children }: UserAuthProps) => {
           .catch((err) => {
             handleUnAuth()
           });
-        } else {
-          handleUnAuth()
-        }
+      } else {
+        handleUnAuth()
+      }
     } else {
       handleUnAuth()
     }

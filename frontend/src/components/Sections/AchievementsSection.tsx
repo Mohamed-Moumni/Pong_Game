@@ -8,8 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import apiClient from "@/services/requestProcessor";
 import { AxiosResponse } from "axios";
 import { useAuth } from "@/hooks/useAuth";
-interface AchievementsSectionsProps {}
-const AchievementsSection: React.FC<AchievementsSectionsProps> = ({}) => {
+interface AchievementsSectionsProps { }
+const AchievementsSection: React.FC<AchievementsSectionsProps> = ({ }) => {
   const client = new apiClient("/users/rank");
   const { currentUser, updateUser } = useAuth();
   const [localRank, setLocal] = useState<ReactNode[]>([]);
@@ -25,7 +25,7 @@ const AchievementsSection: React.FC<AchievementsSectionsProps> = ({}) => {
         res.data.current.ranks.map((user: any, index: number) => {
           user.avatar.includes("http")
             ? user.avatar
-            : "http://e1r8p2.1337.ma:3000/public/users/imgs/" + user.avatar;
+            : "http://localhost:3000/public/users/imgs/" + user.avatar;
           const variant =
             user.id === currentUser.user.id ? "secondField" : "field";
           localRes.push(
@@ -39,8 +39,8 @@ const AchievementsSection: React.FC<AchievementsSectionsProps> = ({}) => {
               userPic={
                 user.avatar.includes("http")
                   ? user.avatar
-                  : "http://e1r8p2.1337.ma:3000/public/users/imgs/" +
-                    user.avatar
+                  : "http://localhost:3000/public/users/imgs/" +
+                  user.avatar
               }
             />
           );
@@ -59,7 +59,7 @@ const AchievementsSection: React.FC<AchievementsSectionsProps> = ({}) => {
         res.data.current.ranks.map((user: any, index: number) => {
           user.avatar.includes("http")
             ? user.avatar
-            : "http://e1r8p2.1337.ma:3000/public/users/imgs/" + user.avatar;
+            : "http://localhost:3000/public/users/imgs/" + user.avatar;
           const variant =
             user.id === currentUser.user.id ? "secondField" : "field";
           allRes.push(
@@ -73,8 +73,8 @@ const AchievementsSection: React.FC<AchievementsSectionsProps> = ({}) => {
               userPic={
                 user.avatar.includes("http")
                   ? user.avatar
-                  : "http://e1r8p2.1337.ma:3000/public/users/imgs/" +
-                    user.avatar
+                  : "http://localhost:3000/public/users/imgs/" +
+                  user.avatar
               }
             />
           );

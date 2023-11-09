@@ -12,7 +12,7 @@ const useAvatarUpdater = () => {
   const updateAvatarMutation = useMutation({
     mutationFn: async (req: AvatarData) =>
       await axios.patch(
-        `http://e1r8p2.1337.ma:3000/chat/channels/avatar`,
+        `http://localhost:3000/chat/channels/avatar`,
         { ...req },
         {
           withCredentials: true,
@@ -27,7 +27,7 @@ const useAvatarUpdater = () => {
         isClosable: true,
       });
     },
-    onError: (error) => {},
+    onError: (error) => { },
   });
 
   function updateAvatar(req: AvatarData) {

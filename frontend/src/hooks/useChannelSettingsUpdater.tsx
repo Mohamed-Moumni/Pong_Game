@@ -6,7 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { GlobalContext } from "@/context/Contexts";
 import { CHANNEL_EVENT_TYPE } from "../../contstants";
-const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
+const useChannelSettingsUpdater = (channel: Channel, user?: User) => {
   const upgrageUserClient = (user: UserChannel) =>
     `chat/channels/${user.channelid}/upgrade/${user.userid}/`;
   const downgradeUserClient = (user: UserChannel) =>
@@ -23,19 +23,19 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
     `chat/channels/${channelId}/change-visibility`;
   const toast = useToast();
   const queryClient = useQueryClient();
-  const {socket} = useContext (GlobalContext);
+  const { socket } = useContext(GlobalContext);
 
   const upgradeUserMutation = useMutation({
     mutationFn: async (user: UserChannel) =>
       await axios
         .patch(
-          `http://e1r8p2.1337.ma:3000/${upgrageUserClient(user)}`,
+          `http://localhost:3000/${upgrageUserClient(user)}`,
           {},
           { withCredentials: true }
         )
         .then((response) => response),
     onSuccess: (data) => {
-      socket.emit ("channelEvent", {userId:user?.id, channelId:channel.id, type:CHANNEL_EVENT_TYPE.UPGRADE});
+      socket.emit("channelEvent", { userId: user?.id, channelId: channel.id, type: CHANNEL_EVENT_TYPE.UPGRADE });
       queryClient.invalidateQueries(["channelMembers", channel.id]);
       toast({
         title: "User upgraded.",
@@ -62,13 +62,13 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
     mutationFn: async (user: UserChannel) =>
       await axios
         .patch(
-          `http://e1r8p2.1337.ma:3000/${downgradeUserClient(user)}`,
+          `http://localhost:3000/${downgradeUserClient(user)}`,
           {},
           { withCredentials: true }
         )
         .then((response) => response),
     onSuccess: (data) => {
-      socket.emit ("channelEvent", {userId:user?.id, channelId:channel.id, type:CHANNEL_EVENT_TYPE.DOWNGRADE});
+      socket.emit("channelEvent", { userId: user?.id, channelId: channel.id, type: CHANNEL_EVENT_TYPE.DOWNGRADE });
       queryClient.invalidateQueries(["channelMembers", channel!.id]);
       toast({
         title: "User downgraded.",
@@ -95,7 +95,7 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
     mutationFn: async (password: string) =>
       await axios
         .patch(
-          `http://e1r8p2.1337.ma:3000/${setChannelPasswordClient(channel)}`,
+          `http://localhost:3000/${setChannelPasswordClient(channel)}`,
           {
             password: password,
           },
@@ -105,7 +105,7 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
         )
         .then((response) => response),
     onSuccess: (data) => {
-      socket.emit ("channelEvent", {userId:user?.id, channelId:channel.id, type:CHANNEL_EVENT_TYPE.CHANNEL_EDIT});
+      socket.emit("channelEvent", { userId: user?.id, channelId: channel.id, type: CHANNEL_EVENT_TYPE.CHANNEL_EDIT });
       queryClient.invalidateQueries(["channels"]);
       queryClient.invalidateQueries(["channel", channel.id]);
       toast({
@@ -133,7 +133,7 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
     mutationFn: async (channelName: string) =>
       await axios
         .patch(
-          `http://e1r8p2.1337.ma:3000/${changeChannelNameClient(channel)}`,
+          `http://localhost:3000/${changeChannelNameClient(channel)}`,
           {
             name: channelName,
           },
@@ -143,7 +143,7 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
         )
         .then((response) => response),
     onSuccess: (data) => {
-      socket.emit ("channelEvent", {userId:user?.id, channelId:channel.id, type:CHANNEL_EVENT_TYPE.CHANNEL_EDIT});
+      socket.emit("channelEvent", { userId: user?.id, channelId: channel.id, type: CHANNEL_EVENT_TYPE.CHANNEL_EDIT });
       queryClient.invalidateQueries(["channels"]);
       queryClient.invalidateQueries(["channel", channel.id]);
       toast({
@@ -170,14 +170,14 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
   const removeChannelPasswordMutation = useMutation({
     mutationFn: async () =>
       await axios.patch(
-        `http://e1r8p2.1337.ma:3000/${removeChannelPasswordClient(channel)}`,
+        `http://localhost:3000/${removeChannelPasswordClient(channel)}`,
         {},
         {
           withCredentials: true,
         }
       ),
     onSuccess: (data) => {
-      socket.emit ("channelEvent", {userId:user?.id, channelId:channel.id, type:CHANNEL_EVENT_TYPE.CHANNEL_EDIT});
+      socket.emit("channelEvent", { userId: user?.id, channelId: channel.id, type: CHANNEL_EVENT_TYPE.CHANNEL_EDIT });
       queryClient.invalidateQueries(["channels"]);
       queryClient.invalidateQueries(["channel", channel.id]);
       toast({
@@ -209,7 +209,7 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
     mutationFn: async (req: PasswordObject) =>
       await axios
         .patch(
-          `http://e1r8p2.1337.ma:3000/${changeChannelPasswordClient(channel)}`,
+          `http://localhost:3000/${changeChannelPasswordClient(channel)}`,
           {
             currentPassword: req.currentPassword,
             newPassword: req.newPassword,
@@ -220,7 +220,7 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
         )
         .then((response) => response),
     onSuccess: (data) => {
-      socket.emit ("channelEvent", {userId:user?.id, channelId:channel.id, type:CHANNEL_EVENT_TYPE.CHANNEL_EDIT});
+      socket.emit("channelEvent", { userId: user?.id, channelId: channel.id, type: CHANNEL_EVENT_TYPE.CHANNEL_EDIT });
       toast({
         title: "Channel password changed.",
         description: "You can now share it with your friends.",
@@ -249,14 +249,14 @@ const useChannelSettingsUpdater = (channel: Channel, user?:User) => {
   const changeVisibilityMutation = useMutation({
     mutationFn: async (req: ChannelType) =>
       await axios.patch(
-        `http://e1r8p2.1337.ma:3000/${visibilityClient(req.channelId)}`,
+        `http://localhost:3000/${visibilityClient(req.channelId)}`,
         { type: req.type },
         {
           withCredentials: true,
         }
       ),
     onSuccess: (data) => {
-      socket.emit ("channelEvent", {userId:user?.id, channelId:channel.id, type:CHANNEL_EVENT_TYPE.CHANNEL_EDIT});
+      socket.emit("channelEvent", { userId: user?.id, channelId: channel.id, type: CHANNEL_EVENT_TYPE.CHANNEL_EDIT });
       queryClient.invalidateQueries(["channels"]);
       toast({
         title: "Channel visibility changed.",

@@ -43,7 +43,7 @@ const AvatarUploader: React.FC<AvatarUploaderProps> = ({
   const uploadAvatarMutation = useMutation({
     mutationFn: async (formData: any) =>
       await axios
-        .post("http://e1r8p2.1337.ma:3000/chat/channels/avatar", formData, {
+        .post("http://localhost:3000/chat/channels/avatar", formData, {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -60,7 +60,7 @@ const AvatarUploader: React.FC<AvatarUploaderProps> = ({
         isClosable: true,
       });
     },
-    onError: (error) => {}, ////console.log(error),
+    onError: (error) => { }, ////console.log(error),
   });
 
   const handleUplaod = () => {
@@ -81,9 +81,8 @@ const AvatarUploader: React.FC<AvatarUploaderProps> = ({
         objectFit="contain"
       >
         <Avatar
-          src={`http://e1r8p2.1337.ma:3000/${
-            channel ? channel!.avatar : avatarPath
-          }`}
+          src={`http://localhost:3000/${channel ? channel!.avatar : avatarPath
+            }`}
           size="2xl"
           bg="#1D222C"
         />
