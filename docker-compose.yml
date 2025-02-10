@@ -30,6 +30,15 @@ services:
       - postgres
     volumes:
       - public:/usr/src/app/public
+  
+  adminer:
+    container_name: adminer
+    image: adminer
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - postgres
 
 volumes:
   pgdata:
